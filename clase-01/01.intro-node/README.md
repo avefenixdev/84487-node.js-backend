@@ -48,3 +48,50 @@ Node Package Manager me permite gestionar las dependencias de un proyecto Node.
 <https://www.npmjs.com/>
 
 ## Inicializar un proyecto de NODE.
+
+```sh
+npm init -y # el flag/bandera -y me permite indicarle a todo que si.
+```  
+
+> Genera un archivo llamado package.json 
+Me va permitir gestionar un proyecto de NODE.
+
+## Listar scripts que tengo
+
+```sh
+npm run
+```
+
+## Casos particulares de npm run
+
+```sh
+npm start # generalmente arranca el proyecto en producción
+npm test # generalmente se utiliza para correr la bateria test
+```
+
+## ¿Qué es GIT?
+Git sirve para registrar, oraganizar y controlar los cambios de un proyecto (Código fuente) a largo del tiempo. Voy a tener historial de los cambio en el tiempo.
+
+* No perder trabajo.
+* Trabajar equipo sin solaparse.
+* Hacer pruebas de código sin temor.
+* Saber qué cambió y cuándo.
+
+### Inicializar un proyecto de GIT
+
+```sh
+git init # crear una carpeta oculta donde git va gestionando los cambios (.git)
+```
+
+### Ver en que estado y área se encuentra mi código
+
+```sh
+git status
+```
+
+> Estados
+
+* Untraked -> git saber que los archivos existen pero no saber su contenido ni puede versionarlos
+* Staged -> los archivos están en la zona de confirmación listos para poder hacer un commit
+* traked -> Archivo ya en el repositorio local.
+* modified -> Significa que entre el Working Directory y el Local Repo hay cambios

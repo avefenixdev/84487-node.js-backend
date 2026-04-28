@@ -1,0 +1,13 @@
+{
+  "name": "01.intro-node",
+  "version": "1.0.0",
+  "description": "Primer proyecto",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "MP",
+  "license": "ISC",
+  "type": "commonjs"
+}
