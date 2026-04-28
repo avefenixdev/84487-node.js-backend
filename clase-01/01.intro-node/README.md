@@ -95,3 +95,22 @@ git status
 * Staged -> los archivos están en la zona de confirmación listos para poder hacer un commit
 * traked -> Archivo ya en el repositorio local.
 * modified -> Significa que entre el Working Directory y el Local Repo hay cambios
+
+## Agregar los archivos al Staging area
+
+```sh
+git add . # Cuidado con punto en el git add porque lo que hace es agregar todos los archivos dentro del Staged
+```
+
+## Es hacer un commit con lo que se almaceno dentro del Staging Area
+
+```sh
+git commit -m "Mensaje descriptivo sobre lo que se guardo dentro de ese commit"
+```
+
+# Visual Studio Code (Extensiones)
+
+* vscode-pdf (tomoki1207.pdf)
+* Better Comments (aaron-bond.better-comments)
+* Material Icon Theme (PKief.material-icon-theme)
+* JavaScript (ES6) code snippets (xabikos.JavaScriptSnippets)
