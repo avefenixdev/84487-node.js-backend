@@ -62,3 +62,11 @@ npm init -y
 * paramentros (por la url) -> http://localhost:8080/api/v1/usuarios/5
 * query string (por la url) -> http://localhost:8080/api/v1/usuarios/?sort=id&order=asc
 * body -> cuerpo de la petición (body)
+
+## Variables de entorno
+
+<https://www.npmjs.com/package/dotenv>
+
+```sh
+npm i dotenv -D # -D significa dependencia de desarrollo
+```

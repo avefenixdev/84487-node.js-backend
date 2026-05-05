@@ -1,5 +1,7 @@
 const app = require("./src/app")
-const PORT = 8080
+require('dotenv').config()
+
+const PORT = process.env.PORT
 
 app.listen(PORT, (error) => {
   if (error) {
