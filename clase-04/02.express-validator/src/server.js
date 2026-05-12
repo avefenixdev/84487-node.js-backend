@@ -21,6 +21,11 @@ app.get('/bienvenido', (req, res) => {
     res.send('Bienvenido al servidor de Express')
 })
 
+app.post('/datos-contacto', (req, res) => {
+    console.log(req.body)
+    res.send('Listo')
+})
+
 // ! Middleware de manejo de error (Siempre al final)
 
 const errorHandler = (err, req, res, next) => {
