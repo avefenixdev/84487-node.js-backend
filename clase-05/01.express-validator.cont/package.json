@@ -1,0 +1,22 @@
+{
+  "name": "01.middlewares",
+  "version": "1.0.0",
+  "description": "Middlewares con Express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2"
+  }
+}
