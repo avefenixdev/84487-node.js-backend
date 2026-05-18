@@ -19,7 +19,7 @@ const App = () => {
       console.log(clave)
       console.log(valor)
     })
-    const urlBack = 'https://back-upload-imagen.onrender.com/api/v1/uploads/'
+    const urlBack = 'http://localhost:8080/uploads'
     const options = {
       method: 'POST',
       body: formData
@@ -42,6 +42,11 @@ const App = () => {
       console.error(error)
     }
   }
+  
+  // Orientado a eventos
+  // callback -> cb -> funcion que se pasa como argumento de otra
+  //addEventListener('click', () => {})
+  //addEventListener('click', function() {})
 
   return (
     <div className="container mt-4">
