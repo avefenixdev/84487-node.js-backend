@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 
 // ! Middlewares
 const upload = multer({ storage: storage })
-app.use(express.static('./uploads'))
+// app.use(express.static('./uploads'))
 
 // ! Rutas
 app.get('/', (req, res) => {
