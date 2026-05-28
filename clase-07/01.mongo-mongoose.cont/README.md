@@ -162,3 +162,260 @@ db.productos.find({ nombre: 'Notebook Gamer' })
 db.productos.find({ disponibilidad: true })
 
 ``` 
+
+## Filtrar o listar un único documento
+Me va a encontrar el primer documento que coincida con el filtro
+
+```js
+db.productos.findOne()
+db.productos.findOne({})
+```
+
+## insertMany(): Inserta uno o varios documentos
+
+```js
+db.productos.insertMany([{}, {}]) // Le paso al insertMany, una lista de documentos
+db.productos.insertMany(
+    [
+        {
+            nombre: 'Heladera',
+            categoria: 'Electro',
+            stock: 45,
+            disponibilidad: true,
+            precio: 389.22
+        }, 
+        {
+            nombre: 'Televisor',
+            categoria: 'Electro',
+            stock: 20,
+            disponibilidad: true,
+            precio: 299.88
+        }
+    ]
+)
+
+// ----------------------
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a177ff0c0858ba712abc11a'),
+    '1': ObjectId('6a177ff0c0858ba712abc11b')
+  }
+}
+// ---------------------
+```  
+
+## Contar cantidad de documentos dentro de la colección
+
+```js
+db.productos.countDocuments()
+```
+
+## Insertando más documentos
+
+```js
+db.productos.insertMany(
+    [
+        {
+            nombre: 'Heladera',
+            categoria: 'Electro',
+            stock: 45,
+            disponibilidad: true,
+            precio: 389.22,
+            dimensiones: {
+                ancho: 80,
+                alto: 1.5,
+                profundidad: 50
+            }
+        }, 
+        {
+            nombre: 'Televisor',
+            categoria: 'Electro',
+            stock: 20,
+            disponibilidad: true,
+            precio: 299.88,
+            dimensiones: {
+                ancho: 80,
+                alto: 50,
+            }
+        }
+    ]
+)
+
+// ---------------------------
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a178224c0858ba712abc11c'),
+    '1': ObjectId('6a178224c0858ba712abc11d')
+  }
+}
+// ---------------------------
+```  
+
+## Crear un documento que no tenga ObjectID
+
+```js
+db.productos.insertOne(
+    {
+        _id: 22,
+        nombre: 'PC Gamer',
+        categoria: 'Computación',
+        stock: 13,
+        disponibilidad: false,
+        precio: 599.88
+    }
+)
+// -------------------------------
+{ acknowledged: true, insertedId: 22 }
+```
+
+## ObjectID
+
+<https://www.geeksforgeeks.org/mongodb/what-is-objectid-in-mongodb/>
+
+## Conversor de ObjectID a fecha y hora
+
+<https://nddapp.com/object-id-to-timestamp-converter>
+
+## Operadores ($)
+
+> Set de datos
+
+```js
+db.usuarios.insertMany(
+    [
+        {
+            nombre: "Ana",
+            edad: 25
+        },
+        {
+            nombre: "Carlos",
+            edad: 32
+        },
+        {
+            nombre: "Lucía",
+            edad: 28
+        },
+        {
+            nombre: "Mateo",
+            edad: 41
+        },
+        {
+            nombre: "Sofía",
+            edad: 19
+        },
+        {
+            nombre: "Javier",
+            edad: 36
+        },
+        {
+            nombre: "Valentina",
+            edad: 22
+        },
+        {
+            nombre: "Diego",
+            edad: 30
+        },
+        {
+            nombre: "Camila",
+            edad: 27
+        },
+        {
+            nombre: "Fernando",
+            edad: 45
+        }
+    ]
+)
+```
+
+### Operadores de comparación
+
+#### $eq (Igual a...)
+
+```js
+db.usuarios.find({
+    edad: {
+        $eq: 36
+    }
+})
+```
+
+### $gt (Mayor que...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $gt: 22
+        }
+    }
+)
+```
+
+### $gte (Mayor o igual que...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+)
+```
+
+### Contar cantidad de elementos que devuelve el find()
+
+
+```js
+// count()
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+).count()
+
+// size()
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+).size()
+``` 
+
+### $lt (Menor que)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $lt: 22
+        }
+    }
+)
+```
+
+### $lte (Menor o igual que)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $lte: 22
+        }
+    }
+)
+```
+
+### $ne (No igual que)
+### $in (Incluido en la lista...)
+### $nin (No incluido en la lista...)
+
+
+
+
