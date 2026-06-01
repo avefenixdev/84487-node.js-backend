@@ -536,7 +536,7 @@ db.productos.find().limit(3) // me muestra los primeros 3 elementos
 db.productos.find().skip(2)
 ```
 
-## Paginados
+## Paginado
 
 > Quiero mostrar 2 productos por página
 
@@ -546,12 +546,78 @@ db.productos.find().skip(2).limit(2)
 db.productos.find().skip(4).limit(2)
 ```
 
-
-
-
 ## sort(): Me permite ordenar la información en forma ascedente o descendente
 
 ```js
+db.usuarios.find().sort( { edad: 1 } ) /// 1 -> asc (menor a mayor)
+db.usuarios.find().sort( { edad: -1 } ) /// -1 -> desc (mayor a menor)
+db.usuarios.find().sort( { nombre: 1, edad: 1 } ) // 1 -> asc (a a la z)
 ```
 
 # Proyección
+
+> Proyección en SQL
+
+```sql
+SELECT * FROM usuarios -- Todos los usuarios de la tabla
+SELECT nombre, apellido FROM usuarios -- Todos los usuarios pero solo las columnas nombre y apellido
+```
+
+```js
+// db.productos.find({<patrón-de-búsqueda/filtro>}, {<proyección>})
+// 0 o false -> no muestra el field
+// 1 o true -> muestra el field
+```
+
+```js
+db.productos.find({}, { _id: 0, nombre: 1})
+db.productos.find({}, { _id: 0, nombre: 1, categoria: 1})
+db.productos.find({}, { _id: 0, categoria: 0})
+```
+
+## Búsquedas con expresiones regulares
+
+Son una herramienta para buscar, validar y manipular textos con reglas (patrones).
+
+1. Definir patrón de búsqueda
+2. Regex lo que hace es con ese patrón buscar dentro de texto
+3. Si coincide o no con ese patrón
+
+> ¿Para qué sirve?
+* Buscar textos sin importan el case
+* Validar emails, contraseñas, DNI, teléfonos
+* Detectar formatos
+* Reemplazar partes de una cadena
+* Filtrar datos en bases de datos Mongo
+
+<https://regexr.com/>
+<https://regex101.com/>
+
+```js
+db.productos.find({
+  nombre: /mouse/i
+})
+const palabraABuscar = 'mouse'
+db.productos.find({
+  nombre: { $regex: palabraABuscar, $options: 'i' }
+})
+```
+# CRUD -> C:CREATE | U:UPDATE | D:DELETE
+
+## insertOne(): Me inserta dentro de una colección un solo documento
+## insertMany(): Me inserta dentro de una colección uno o varios documentos
+## deleteOne(): Me permite borrar un documento dado un patrón de búsqueda
+
+```js
+// db.usuarios.deleteOne({<filtro-patrón-de-busqueda>})
+db.usuarios.deleteOne({ nombre: 'Ana' })
+```
+
+## deleteMany(): Me permite borrar varios documentos dado un patrón de búsqueda
+
+```js
+db.usuarios.deleteMany( { edad: { $gte: 25 })
+``` 
+
+## updateOne(): Me permite editar (actualizar) un documento
+## updateMany(): Me permite editar (actualizar) uno o varios documentos
