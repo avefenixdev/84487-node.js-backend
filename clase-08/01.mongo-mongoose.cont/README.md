@@ -1,0 +1,451 @@
+# Base de datos MONGO
+
+Son bases de datos no relacionales (mal llamadas NoSQL) a bases de datos que no usan tablas relacionadas con claves foráneas. Sirven para resolver problemas del modelo relacional cuando se manejan grandes volumens de datos, estructuras cambiantes y velocidad.
+
+En lugar de tablas, usan otros modelos datos
+
+* Documentos (Mongo) -> JSON/BSON
+* Clave-Valor (Redis)
+* Columnas
+* Grafos
+
+## Diferencias entre Relaciones y no relacionales
+
+Relacionales. (Fija|Schema)
+Relaciones -> (Explicitas FK, JOIN)
+Escalidad -> Vertical (principalmente)
+Cambio de estrucutra -> Costoso y lento
+Control de datos -> Estrico
+
+No Relacionales. (Flexible o inexistente) 
+Relaciones -> Implicitas o manuales
+Escalidad -> Horizontal (nativa)
+Cambio de la estructura -> Rápido y simple
+Control de datos -> Más laxo
+
+# MONGO
+
+<https://www.mongodb.com/>
+
+
+# JSON -> Javascript Object Notation
+JSON (JavaScript Object Notation - Notación de Objetos de JavaScript) es un formato ligero de intercambio de datos. Leerlo y escribirlo es simple para humanos, mientras que para las máquinas es simple interpretarlo y generarlo.
+
+<https://www.json.org/json-es.html>
+
+# JSON vs BSON
+
+<https://www.mongodb.com/resources/basics/json-and-bson>
+
+
+# Empezando a trabajar con MONGO
+
+## Levantar el motor de MONGO
+
+```sh
+mongod
+```  
+
+## Tengo que conectarme al motor
+
+```sh
+mongosh
+```
+
+## Listar a DBs
+
+```js
+show dbs
+show databases
+```
+
+## Crear o seleccionar una DB
+
+```js
+use <nombre-db>
+use mongo_84487
+```
+
+## Creamos una colección
+
+```js
+db.createCollection("<nombre-colección>")
+db.createCollection("productos") // Nombre en minusculas y plural (guión bajo para separar 2 palabras)
+```
+
+## Listar colecciones
+
+```js
+show collections
+```
+
+## Crear un documento dentro de una colección
+
+```js
+db.<nombre-collection>.insertOne(
+    {
+        field1: 'value1',
+        field2: 'value2'
+    }
+)
+``` 
+
+```js
+db.productos.insertOne(
+    {
+        nombre: 'Notebook Gamer',
+        categoria: 'Computación',
+        stock: 20,
+        disponibilidad: true,
+        precio: 889.88
+    }
+)
+
+// ------------------------
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a177831c0858ba712abc114')
+}
+// ------------------------
+
+db.productos.insertOne(
+    {
+        nombre: 'PC Gamer',
+        categoria: 'Computación',
+        stock: 13,
+        disponibilidad: false,
+        precio: 599.88
+    }
+)
+
+// ------------------------
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a177896c0858ba712abc115')
+}
+// ------------------------
+```
+
+## Listar documentos dentro de una colección
+
+```js
+// todos los documentos
+db.<nombre-colección>.find() 
+db.<nombre-colección>.find({}) 
+// todos los documentos dentro de la colección productos
+db.productos.find({})
+// ----------------------
+[
+  {
+    _id: ObjectId('6a177831c0858ba712abc114'),
+    nombre: 'Notebook Gamer',
+    categoria: 'Computación',
+    stock: 20,
+    disponibilidad: true,
+    precio: 889.88
+  },
+  {
+    _id: ObjectId('6a177896c0858ba712abc115'),
+    nombre: 'PC Gamer',
+    categoria: 'Computación',
+    stock: 13,
+    disponibilidad: false,
+    precio: 599.88
+  }
+]
+```
+
+## Filtrar documentos obtenidos
+
+```js
+db.productos.find({ nombre: 'Notebook Gamer' })
+db.productos.find({ disponibilidad: true })
+
+``` 
+
+## Filtrar o listar un único documento
+Me va a encontrar el primer documento que coincida con el filtro
+
+```js
+db.productos.findOne()
+db.productos.findOne({})
+```
+
+## insertMany(): Inserta uno o varios documentos
+
+```js
+db.productos.insertMany([{}, {}]) // Le paso al insertMany, una lista de documentos
+db.productos.insertMany(
+    [
+        {
+            nombre: 'Heladera',
+            categoria: 'Electro',
+            stock: 45,
+            disponibilidad: true,
+            precio: 389.22
+        }, 
+        {
+            nombre: 'Televisor',
+            categoria: 'Electro',
+            stock: 20,
+            disponibilidad: true,
+            precio: 299.88
+        }
+    ]
+)
+
+// ----------------------
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a177ff0c0858ba712abc11a'),
+    '1': ObjectId('6a177ff0c0858ba712abc11b')
+  }
+}
+// ---------------------
+```  
+
+## Contar cantidad de documentos dentro de la colección
+
+```js
+db.productos.countDocuments()
+```
+
+## Insertando más documentos
+
+```js
+db.productos.insertMany(
+    [
+        {
+            nombre: 'Heladera',
+            categoria: 'Electro',
+            stock: 45,
+            disponibilidad: true,
+            precio: 389.22,
+            dimensiones: {
+                ancho: 80,
+                alto: 1.5,
+                profundidad: 50
+            }
+        }, 
+        {
+            nombre: 'Televisor',
+            categoria: 'Electro',
+            stock: 20,
+            disponibilidad: true,
+            precio: 299.88,
+            dimensiones: {
+                ancho: 80,
+                alto: 50,
+            }
+        }
+    ]
+)
+
+// ---------------------------
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a178224c0858ba712abc11c'),
+    '1': ObjectId('6a178224c0858ba712abc11d')
+  }
+}
+// ---------------------------
+```  
+
+## Crear un documento que no tenga ObjectID
+
+```js
+db.productos.insertOne(
+    {
+        _id: 22,
+        nombre: 'PC Gamer',
+        categoria: 'Computación',
+        stock: 13,
+        disponibilidad: false,
+        precio: 599.88
+    }
+)
+// -------------------------------
+{ acknowledged: true, insertedId: 22 }
+```
+
+## ObjectID
+
+<https://www.geeksforgeeks.org/mongodb/what-is-objectid-in-mongodb/>
+
+## Conversor de ObjectID a fecha y hora
+
+<https://nddapp.com/object-id-to-timestamp-converter>
+
+## Operadores ($)
+
+> Set de datos
+
+```js
+db.usuarios.insertMany(
+    [
+        {
+            nombre: "Ana",
+            edad: 25
+        },
+        {
+            nombre: "Carlos",
+            edad: 32
+        },
+        {
+            nombre: "Lucía",
+            edad: 28
+        },
+        {
+            nombre: "Mateo",
+            edad: 41
+        },
+        {
+            nombre: "Sofía",
+            edad: 19
+        },
+        {
+            nombre: "Javier",
+            edad: 36
+        },
+        {
+            nombre: "Valentina",
+            edad: 22
+        },
+        {
+            nombre: "Diego",
+            edad: 30
+        },
+        {
+            nombre: "Camila",
+            edad: 27
+        },
+        {
+            nombre: "Fernando",
+            edad: 45
+        }
+    ]
+)
+```
+
+### Operadores de comparación
+
+#### $eq (Igual a...)
+
+```js
+db.usuarios.find({
+    edad: {
+        $eq: 36
+    }
+})
+```
+
+### $gt (Mayor que...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $gt: 22
+        }
+    }
+)
+```
+
+### $gte (Mayor o igual que...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+)
+```
+
+### Contar cantidad de elementos que devuelve el find()
+
+
+```js
+// count()
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+).count()
+
+// size()
+db.usuarios.find(
+    {
+        edad: {
+            $gte: 22
+        }
+    }
+).size()
+``` 
+
+### $lt (Menor que)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $lt: 22
+        }
+    }
+)
+```
+
+### $lte (Menor o igual que)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $lte: 22
+        }
+    }
+)
+```
+
+### $ne (No igual que)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $ne: 22
+        }
+    }
+)
+```
+
+### $in (Incluido en la lista...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $in: [22, 45, 27, 30, 100, 150]
+        }
+    }
+)
+```
+
+### $nin (No incluido en la lista...)
+
+```js
+db.usuarios.find(
+    {
+        edad: {
+            $nin: [22, 45, 27, 30, 100, 150]
+        }
+    }
+)
+```
+
+
