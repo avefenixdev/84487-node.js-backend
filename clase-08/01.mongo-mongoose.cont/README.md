@@ -329,9 +329,11 @@ db.usuarios.insertMany(
 )
 ```
 
-### Operadores de comparación
+# Operadores de comparación
 
-#### $eq (Igual a...)
+<https://www.mongodb.com/es/docs/manual/reference/mql/query-predicates/comparison/>
+
+## $eq (Igual a...)
 
 ```js
 db.usuarios.find({
@@ -341,7 +343,7 @@ db.usuarios.find({
 })
 ```
 
-### $gt (Mayor que...)
+## $gt (Mayor que...)
 
 ```js
 db.usuarios.find(
@@ -353,7 +355,7 @@ db.usuarios.find(
 )
 ```
 
-### $gte (Mayor o igual que...)
+## $gte (Mayor o igual que...)
 
 ```js
 db.usuarios.find(
@@ -365,7 +367,7 @@ db.usuarios.find(
 )
 ```
 
-### Contar cantidad de elementos que devuelve el find()
+> Contar cantidad de elementos que devuelve el find()
 
 
 ```js
@@ -388,7 +390,7 @@ db.usuarios.find(
 ).size()
 ``` 
 
-### $lt (Menor que)
+## $lt (Menor que)
 
 ```js
 db.usuarios.find(
@@ -400,7 +402,7 @@ db.usuarios.find(
 )
 ```
 
-### $lte (Menor o igual que)
+## $lte (Menor o igual que)
 
 ```js
 db.usuarios.find(
@@ -412,7 +414,7 @@ db.usuarios.find(
 )
 ```
 
-### $ne (No igual que)
+## $ne (No igual que)
 
 ```js
 db.usuarios.find(
@@ -423,8 +425,7 @@ db.usuarios.find(
     }
 )
 ```
-
-### $in (Incluido en la lista...)
+## $in (Incluido en la lista...)
 
 ```js
 db.usuarios.find(
@@ -436,7 +437,7 @@ db.usuarios.find(
 )
 ```
 
-### $nin (No incluido en la lista...)
+## $nin (No incluido en la lista...)
 
 ```js
 db.usuarios.find(
@@ -448,4 +449,109 @@ db.usuarios.find(
 )
 ```
 
+# Operadores lógicos
 
+<https://www.mongodb.com/es/docs/manual/reference/mql/query-predicates/logical/>
+
+## $and (Operador lógico 'y' -> 'and')
+
+> Encuentra
+```js
+db.usuarios.find({
+    $and: [
+        { edad: 22 },
+        { nombre: 'Valentina' }
+    ]
+})
+``` 
+> No encuentra
+
+```js
+db.usuarios.find({
+    $and: [
+        { edad: 22 },
+        { nombre: 'Roberto' }
+    ]
+})
+```
+
+## $or (Operador lógico 'o' -> 'or')
+
+```js
+db.usuarios.find({
+    $or: [
+        { edad: 22 },
+        { nombre: 'Ana' }
+    ]
+})
+```
+
+## $nor (Ninguna condición)
+Sirve para excluir documentos que no quiero que aparezcan en la query
+
+```js
+db.usuarios.find({
+    $nor: [
+        { edad: 22 },
+        { nombre: 'Ana' }
+    ]
+})
+```
+
+## $not (Lo opuesto a lo que indico en la query)
+
+```js
+db.usuarios.find({
+    edad: { $not: {  $gt: 22 } }
+})
+```
+
+## Combianndo $and y $or
+
+```js
+db.usuarios.find({
+    $and: [
+        { active: true },
+        {
+            $or: [
+                { role: 'admin' },
+                { role: 'docente' }
+            ]
+        }
+    ]
+})
+```
+
+# Métodos de Mongo
+
+## limit(): Me permite limitar la cantidad de documentos que devuelve la query
+
+```js
+db.productos.find().limit(3) // me muestra los primeros 3 elementos
+```
+
+## skip(): Me permite descartar documentos que están al principio de la consulta
+
+```js
+db.productos.find().skip(2)
+```
+
+## Paginados
+
+> Quiero mostrar 2 productos por página
+
+```js
+db.productos.find().skip(0).limit(2)
+db.productos.find().skip(2).limit(2)
+db.productos.find().skip(4).limit(2)
+```
+
+
+
+
+## sort(): Me permite ordenar la información en forma ascedente o descendente
+
+```js
+```
+
+# Proyección
