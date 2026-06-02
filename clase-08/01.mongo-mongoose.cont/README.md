@@ -620,4 +620,46 @@ db.usuarios.deleteMany( { edad: { $gte: 25 })
 ``` 
 
 ## updateOne(): Me permite editar (actualizar) un documento
+El primero que encuentre. Va a eliminar el primero según el orden de creación
+
+### $set -> Me permite agregar o editar fields
+### $unset -> Me permite eliminar fields
+
+```js
+db.usuarios.updateOne({<filtro/patron>}, {<la-actualización>})
+
+db.usuarios.find({ edad: { $eq: 36 } })
+db.usuarios.updateOne({ edad: { $eq: 36 } }, { $set: { edad: 37 } })
+
+db.usuarios.find({ _id: ObjectId('6a1e151dacc885816cdaf291') })
+db.usuarios.updateOne({ _id: ObjectId('6a1e151dacc885816cdaf291') }, { $set: { edad: 29, role: 'alumno' }  })
+```
+
 ## updateMany(): Me permite editar (actualizar) uno o varios documentos
+
+```js
+db.usuarios.updateMany({}, { $set: { correo: 'nombre.apellido@gmail.com' }  })
+```
+
+# mongodump: Backup o Dump de la base de datos
+
+```sh
+mongodump --db=<nombre-base-datos> --collection=<nombre-colección> --out=<ruta>
+mongodump --db=mongo_84487
+```
+
+# mongorestore: Recuperar Dump, restaurar DB backupeadas
+
+```sh
+mongorestore --nsInclude=<base-datos>.<collection> <ruta-donde-están-los-dump>
+mongorestore --nsInclude=mongo_84487.* ./dump 
+mongorestore --nsInclude=mongo_84487.usuarios ./dump # indico que restaure la colección 'usuarios'
+```
+
+# Borrando colecciones dentro de una DB
+
+```js
+db.<nombre-db>.drop()
+db.usuarios.drop()
+db.prodcutos.drop()
+```
