@@ -100,7 +100,7 @@ export default [
 
 # Dependencias para la gestión de usuario y autenticación
 
-- bcrypt -> encriptar la contraseña del usuario y poder guardar en la DB
+- bcrypt -> encriptar la contraseña del usuario y poder guardar en la DB <https://www.npmjs.com/package/bcrypt>
 - express-session -> gestión de sesiones
 - connect-mongo -> nos va a permitir persistir las sesiones de usuario dentro de la DB
 - mongoose -> Conectar y usar la DB
