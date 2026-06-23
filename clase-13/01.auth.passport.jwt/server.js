@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import './utils/handle-passport.js';
+import './utils/handle-passport-jwt.js';
 
 // ! Variables | Constantes
 const app = express();

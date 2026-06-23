@@ -1,10 +1,5 @@
-const isAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
+import passport from 'passport';
 
-  res.status(401).send('No tenés acceso a la parte privada');
-  //res.redirect('/')
-};
+const isAuthenticated = passport.authenticate('jwt', { session: false });
 
 export default isAuthenticated;

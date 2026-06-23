@@ -1,5 +1,6 @@
 import passport from 'passport';
 import authModel from '../models/auth.model.js';
+import jwt from 'jsonwebtoken';
 
 const register = async (req, res) => {
   try {
@@ -37,13 +38,41 @@ const register = async (req, res) => {
   }
 };
 
-const login = passport.authenticate('local', {
-  successRedirect: '/productos', // esCorrecto -> true
-  failureRedirect: '/', // esCorrecto -> false
-});
+const login = async (req, res) => {
+  try {
+    const { correo, password } = req.body;
+    const usuario = await authModel.getByCorreo(correo);
+
+    const esCorrecto = await authModel.chequearPassword(usuario, password);
+
+    if (!usuario || !esCorrecto) {
+      return res.status(200).json({ mensaje: 'Credenciales inválidas' });
+    }
+
+    console.log('OK');
+
+    // ! FIRMAR EL TOKEN (GENERAR TOKEN)
+    const payload = { id: usuario._id };
+    // https://www.jwt.io/
+    const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1d' });
+    console.log(token);
+    res.cookie('jwt', token, {
+      httpOnly: true, // No se pueda manipular desde js en el cliente
+      secure: false, // Cuando este en producción a true (https)
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000, // 1 día
+    });
+
+    res.json({ token: `Bearer ${token}` });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: 'Algo falló' });
+  }
+};
 
 const logout = (req, res) => {
-  res.send('logout');
+  res.clearCookie('jwt');
+  res.json({ mensaje: 'Sesión cerrada' });
 };
 
 export default {
