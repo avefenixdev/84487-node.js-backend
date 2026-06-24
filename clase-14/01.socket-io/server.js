@@ -17,6 +17,12 @@ const FILENAME = fileURLToPath(import.meta.url);
 const DIRNAME = path.dirname(FILENAME);
 // console.log(FILENAME);
 // console.log(DIRNAME);
+const mensajes = [
+  { usuario: 'Pedro', mensaje: 'Hola! que tal!' },
+  { usuario: 'Alfredo', mensaje: 'Muy bien y vos?' },
+  { usuario: 'Natalia', mensaje: 'Genial' },
+  { usuario: 'Laura', mensaje: 'Todo feten feten' },
+];
 
 // ! Configuraciones
 // * Agrego la librería socket.io
@@ -27,6 +33,41 @@ const io = new Server(server);
 app.use(express.json()); // Me decodifica el body cuando llega a través de un json
 app.use(express.static(path.join(DIRNAME, 'public')));
 //console.log(path.join(DIRNAME, 'public'));
+// orientado a eventos
+// addEventListner('evento', callback) // callback -> una función pasada como argumento
+io.on('connection', (socket) => {
+  console.log('Un cliente se ha conectado', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado!', socket.id);
+  });
+
+  const userId = socket.handshake.auth;
+  console.log('Usuario:', userId, 'Socket:', socket.id);
+
+  // Emitir mensajes desde el servidor al cliente!
+  socket.emit('nombre', 'Maximiliano');
+  socket.emit('clientes', [
+    { id: 1, nombre: 'Sabrina' },
+    { id: 2, nombre: 'Lautaro' },
+    { id: 3, nombre: 'Juan' },
+  ]);
+  // Recibiendo mensajes
+  socket.on('is-active', (booleano) => {
+    console.log(booleano);
+  });
+
+  // Emitiendo mensajes al cliente
+  socket.emit('mensajes', mensajes);
+
+  // Recibir el mensaje
+  socket.on('nuevo-mensaje', (nuevoMensaje) => {
+    console.log(nuevoMensaje);
+    mensajes.push(nuevoMensaje);
+    console.log(mensajes);
+    io.sockets.emit('mensajes', mensajes);
+  });
+});
 
 // ! Rutas
 app.use('/', routerAuth);
