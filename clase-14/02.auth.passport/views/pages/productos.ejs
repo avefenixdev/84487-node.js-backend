@@ -1,0 +1,65 @@
+<main class="max-w-7xl mx-auto px-4 py-10">
+
+    <!-- Título -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-blue-600">
+            Listado de Productos
+        </h1>
+        <p class="text-gray-600 mt-2">
+            Consulta el catálogo de productos disponibles.
+        </p>
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold uppercase">
+                            Código
+                        </th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold uppercase">
+                            Producto
+                        </th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold uppercase">
+                            Categoría
+                        </th>
+                        <th class="px-6 py-4 text-right text-sm font-semibold uppercase">
+                            Precio
+                        </th>
+                        <th class="px-6 py-4 text-center text-sm font-semibold uppercase">
+                            Stock
+                        </th>
+                        <th class="px-6 py-4 text-center text-sm font-semibold uppercase">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                  <% productos.forEach(p => { %>
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="px-6 py-4"><%= p.codigo %></td>
+                        <td class="px-6 py-4 font-medium"><%= p.nombre %></td>
+                        <td class="px-6 py-4"><%= p.categoria %></td>
+                        <td class="px-6 py-4 text-right">$<%= p.precio %></td>
+                        <td class="px-6 py-4 text-center"><%= p.stock %></td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                  <% }) %>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</main>

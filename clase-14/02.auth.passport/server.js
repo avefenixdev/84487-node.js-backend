@@ -66,8 +66,18 @@ app.get('/', async (req, res) => {
   res.render('layout', { titulo: 'Inicio', body });
 });
 
+app.get('/nosotros', async (req, res) => {
+  const body = await obtenerPagina('nosotros');
+  res.render('layout', { titulo: 'Contacto', body });
+});
+
 app.get('/contacto', async (req, res) => {
   const body = await obtenerPagina('contacto');
+  res.render('layout', { titulo: 'Contacto', body });
+});
+
+app.get('/dashboard', async (req, res) => {
+  const body = await obtenerPagina('productos.pv');
   res.render('layout', { titulo: 'Contacto', body });
 });
 

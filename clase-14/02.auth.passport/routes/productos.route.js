@@ -6,17 +6,9 @@ const routerProductos = express.Router();
 
 // ! ---------------------- Rutas Productos
 // ! Ruta que nos muestra el dashboard de todos los productos (zona privada)
-routerProductos.get(
-  '/productos',
-  isAuthenticated,
-  productosController.getAllProductos
-);
+routerProductos.get('/productos', productosController.getAllProductos);
 
 // ! Ruta que nos muestra el dashboard de un solo producto (zona privada)
-routerProductos.get(
-  '/productos/:id',
-  isAuthenticated,
-  productosController.getOneProductos
-);
+routerProductos.get('/productos/:id', productosController.getOneProductos);
 
 export default routerProductos;
