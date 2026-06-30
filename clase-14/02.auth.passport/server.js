@@ -29,6 +29,7 @@ app.set('layout', 'layout'); // Le indico donde van a estar los layouts
 app.use(express.static(path.join(__dirname, 'public'))); // Ruta a donde va a ir a buscar las plantillas
 
 app.use(express.json()); // Me decodifica el body cuando llega a través de un json
+app.use(express.urlencoded({ extended: true })); // Me decodifica el body cuando llega a través de un formulario
 // ! Middleware de Cookies
 app.use(cookieParser()); // Decodificar las cookies que nos lleguen desde el cliente
 // ! Middleware de Session

@@ -17,14 +17,50 @@ const getAllProductos = async (req, res) => {
     const productos = await modelo.getAllProductos();
     const body = await obtenerPagina('productos', { productos }); // nuevo obj y dentro pasar lo que necesite
     res.render('layout', { titulo: 'Listado Productos', body });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getOneProductos = (req, res) => {
   res.send('Un solo producto');
 };
 
+const getAllProductosPrivado = async (req, res) => {
+  try {
+    const productos = await modelo.getAllProductos();
+    const body = await obtenerPagina('private/dashboard', { productos }); // nuevo obj y dentro pasar lo que necesite
+    res.render('layout', { titulo: 'Listado Productos', body });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const showCreateFormu = async (req, res) => {
+  try {
+    const body = await obtenerPagina('private/create-formu'); // nuevo obj y dentro pasar lo que necesite
+    res.render('layout', { titulo: 'Formulario carga producto', body });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const saveProduct = async (req, res) => {
+  try {
+    const productoACrear = req.body;
+    console.log(productoACrear);
+    await modelo.createProducto(productoACrear);
+
+    res.status(201).redirect('/dashboard');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   getAllProductos,
   getOneProductos,
+  getAllProductosPrivado,
+  showCreateFormu,
+  saveProduct,
 };

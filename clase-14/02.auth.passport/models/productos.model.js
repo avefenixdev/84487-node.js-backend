@@ -35,6 +35,15 @@ const getAllProductos = async () => {
   }
 };
 
+const createProducto = async (nuevoProducto) => {
+  try {
+    await ProductosModelo.create(nuevoProducto);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
   getAllProductos,
+  createProducto,
 };

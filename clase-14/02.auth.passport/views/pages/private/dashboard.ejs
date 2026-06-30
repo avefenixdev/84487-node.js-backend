@@ -1,0 +1,114 @@
+<main class="max-w-7xl mx-auto px-6 py-10">
+  <!-- Encabezado -->
+  <div
+    class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8"
+  >
+    <div>
+      <h1 class="text-3xl font-bold text-blue-600">Gestión de Productos</h1>
+      <p class="text-gray-500 mt-1">Administra el catálogo de productos.</p>
+    </div>
+
+    <a
+      href="/create-formu"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-3 rounded-lg shadow transition flex items-center gap-2"
+    >
+      <!-- Icono + -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 4v16m8-8H4"
+        />
+      </svg>
+
+      Nuevo Producto
+    </a>
+  </div>
+
+  <!-- Barra de acciones -->
+  <div class="bg-white rounded-lg shadow p-4 mb-6">
+    <div class="flex flex-col md:flex-row gap-4 justify-between">
+      <input
+        type="text"
+        placeholder="Buscar por nombre, código o categoría..."
+        class="w-full md:w-96 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <select
+        class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option>Todas las categorías</option>
+        <option>Informática</option>
+        <option>Accesorios</option>
+        <option>Monitores</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="bg-blue-600 text-white">
+          <tr>
+            <th class="px-6 py-4 text-left">Código</th>
+            <th class="px-6 py-4 text-left">Producto</th>
+            <th class="px-6 py-4 text-left">Categoría</th>
+            <th class="px-6 py-4 text-right">Precio</th>
+            <th class="px-6 py-4 text-center">Stock</th>
+            <th class="px-6 py-4 text-center">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="contenedor-productos" class="divide-y divide-gray-200">
+          <% productos.forEach(p => { %>
+            <tr class="hover:bg-blue-50">
+            <td class="px-6 py-4"><%= p.codigo %></td>
+            <td class="px-6 py-4 font-medium"><%= p.nombre %></td>
+            <td class="px-6 py-4"><%= p.categoria %></td>
+            <td class="px-6 py-4 text-right">$ <%= p.precio %></td>
+
+            <td class="px-6 py-4 text-center">
+              <span
+                class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+              >
+                <%= p.stock %>
+              </span>
+            </td>
+
+            <td class="px-6 py-4">
+              <div class="flex justify-center gap-2">
+                <button
+                  class="bg-sky-500 hover:bg-sky-600 text-white px-3 py-2 rounded-md transition"
+                >
+                  Ver
+                </button>
+
+                <button
+                  class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-2 rounded-md transition"
+                >
+                  Editar
+                </button>
+
+                <button
+                  data-id="<%= p._id %>"
+                  class="eliminar-producto bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md transition"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
